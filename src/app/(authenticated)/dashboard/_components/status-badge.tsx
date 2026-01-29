@@ -1,7 +1,7 @@
 const statusConfig = {
-  ok: { label: 'OK', className: 'bg-green-100 text-green-800' },
-  warn: { label: 'WARN', className: 'bg-yellow-100 text-yellow-800' },
-  down: { label: 'DOWN', className: 'bg-red-100 text-red-800' },
+  ok: { label: 'OK', className: 'bg-green-100 text-green-900 border border-green-300' },
+  warn: { label: 'WARN', className: 'bg-amber-100 text-amber-900 border border-amber-300' },
+  down: { label: 'DOWN', className: 'bg-red-100 text-red-900 border border-red-300' },
 } as const
 
 type Status = keyof typeof statusConfig

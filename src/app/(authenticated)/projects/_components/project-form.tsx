@@ -21,7 +21,7 @@ export function ProjectForm({ project }: Props) {
       {isEdit && <input type="hidden" name="project_id" value={project.id} />}
 
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="name" className="block text-sm font-medium text-gray-800">
           Project name <span className="text-red-500">*</span>
         </label>
         <input
@@ -31,7 +31,7 @@ export function ProjectForm({ project }: Props) {
           required
           maxLength={100}
           defaultValue={project?.name ?? ''}
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border border-gray-300 bg-white text-gray-900 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
         />
         {state.errors?.name && (
           <p className="mt-1 text-sm text-red-600">{state.errors.name}</p>
@@ -39,7 +39,7 @@ export function ProjectForm({ project }: Props) {
       </div>
 
       <div>
-        <label htmlFor="keepalive_url" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="keepalive_url" className="block text-sm font-medium text-gray-800">
           keep-alive URL <span className="text-red-500">*</span>
         </label>
         <input
@@ -49,7 +49,7 @@ export function ProjectForm({ project }: Props) {
           required
           placeholder="https://your-app.vercel.app/api/keepalive"
           defaultValue={project?.keepalive_url ?? ''}
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border border-gray-300 bg-white text-gray-900 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
         />
         {state.errors?.keepalive_url && (
           <p className="mt-1 text-sm text-red-600">{state.errors.keepalive_url}</p>
@@ -69,13 +69,13 @@ export function ProjectForm({ project }: Props) {
           defaultChecked={project?.is_enabled ?? true}
           className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
         />
-        <label htmlFor="is_enabled" className="text-sm text-gray-700">
+        <label htmlFor="is_enabled" className="text-sm text-gray-800">
           Enable keep-alive ping
         </label>
       </div>
 
       <div>
-        <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="notes" className="block text-sm font-medium text-gray-800">
           Notes
         </label>
         <textarea
@@ -83,7 +83,7 @@ export function ProjectForm({ project }: Props) {
           name="notes"
           rows={3}
           defaultValue={project?.notes ?? ''}
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border border-gray-300 bg-white text-gray-900 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
         />
       </div>
 

@@ -16,8 +16,8 @@
 
 ### 初期データ投入
 
-- [ ] 自己ping用のTokenを生成
-- [ ] projectsテーブルに自分自身を登録
+- [x] 自己ping用のTokenを生成
+- [x] projectsテーブルに自分自身を登録
 
 ```sql
 INSERT INTO projects (
@@ -39,8 +39,8 @@ INSERT INTO projects (
 
 ### 環境変数確認
 
-- [ ] `KEEPALIVE_TOKEN` が設定されていることを確認
-- [ ] projectsテーブルのtokenと一致していることを確認
+- [x] `KEEPALIVE_TOKEN` が設定されていることを確認
+- [x] projectsテーブルのtokenと一致していることを確認
 
 ### 動作確認
 
@@ -55,7 +55,7 @@ INSERT INTO projects (
 
 ## 完了条件
 
-- [ ] projectsテーブルに自分自身が登録されている
-- [ ] Tokenが環境変数と一致している
+- [x] projectsテーブルに自分自身が登録されている
+- [x] Tokenが環境変数と一致している
 - [ ] 「今すぐPing」で成功する
 - [ ] Cron実行時にpingされる

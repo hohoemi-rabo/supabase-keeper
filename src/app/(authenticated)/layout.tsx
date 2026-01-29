@@ -19,9 +19,9 @@ export default async function AuthenticatedLayout({
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-14">
-            <h1 className="text-lg font-semibold">Supabase Keeper</h1>
+            <h1 className="text-lg font-semibold text-gray-900">Supabase Keeper</h1>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-500">{user.email}</span>
+              <span className="text-sm text-gray-600">{user.email}</span>
               <form action={logout}>
                 <button
                   type="submit"

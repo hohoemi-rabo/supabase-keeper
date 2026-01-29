@@ -12,61 +12,56 @@
 
 | 項目 | 説明 |
 |------|------|
-| 実行日時 | Pingを実行した日時 |
-| 成否 | ✅ 成功 / ❌ 失敗 |
-| HTTPステータス | 200, 500 など |
-| レイテンシ | 応答時間（ms） |
-| エラーメッセージ | 失敗時のエラー内容 |
+| 実行日時 | Pingを実行した日時（秒まで表示） |
+| 成否 | Success（緑） / Failed（赤） |
+| HTTPステータス | 200, 500 など（色分けバッジ） |
+| レイテンシ | 応答時間（緑<500ms, 黄<2000ms, 赤>=2000ms） |
+| エラーメッセージ | 失敗時のエラー内容（truncate表示） |
 
 ## タスク
 
-### 画面実装
+### Server Action
 
-- [ ] `app/(authenticated)/projects/[id]/logs/page.tsx` 作成
-- [ ] ログ一覧取得のServer Action作成
-- [ ] ログテーブル/リストコンポーネント作成
+- [x] `getPingLogs` - ページネーション付きログ取得（20件/ページ）
 
-### データ取得
+### 画面・コンポーネント
 
-- [ ] ページネーション実装（1ページ20件程度）
-- [ ] 日付でのソート（新しい順）
-
-### 表示コンポーネント
-
-- [ ] 成否アイコン（✅/❌）
-- [ ] HTTPステータスバッジ
-- [ ] レイテンシ表示（色分け: 緑<500ms, 黄<2000ms, 赤>=2000ms）
-- [ ] エラーメッセージ表示（折りたたみ可）
+- [x] `projects/[id]/logs/page.tsx` - ログ一覧ページ
+- [x] `_components/log-table.tsx` - テーブル表示（成否/ステータス/レイテンシ色分け）
+- [x] `_components/pagination.tsx` - Previous/Next ページネーション
 
 ### UI/UX
 
-- [ ] 空状態の表示（ログなし）
-- [ ] ローディング状態
-- [ ] ダッシュボードへの戻るリンク
+- [x] 空状態の表示（「No ping logs yet.」）
+- [x] エラー状態の表示
+- [x] ダッシュボードへの戻るリンク
+- [x] プロジェクトカードから「Logs」リンク追加
 
 ## コンポーネント構成
 
 ```
 src/
   app/
+    actions/
+      ping-logs.ts                          # getPingLogs
     (authenticated)/
       projects/
         [id]/
           logs/
-            page.tsx
+            page.tsx                        # ログ一覧ページ
             _components/
-              log-table.tsx
-              log-row.tsx
-              pagination.tsx
-  actions/
-    ping-logs.ts
+              log-table.tsx                 # テーブル + 成否/ステータス/レイテンシ
+              pagination.tsx                # ページネーション
+      dashboard/
+        _components/
+          project-card.tsx                  # 「Logs」リンク追加
 ```
 
 ## 完了条件
 
-- [ ] Pingログ一覧が表示される
-- [ ] 成否が視覚的に分かる
-- [ ] HTTPステータスが表示される
-- [ ] レイテンシが表示される
-- [ ] エラーメッセージが表示される
-- [ ] ページネーションが機能する
+- [x] Pingログ一覧が表示される
+- [x] 成否が視覚的に分かる
+- [x] HTTPステータスが表示される
+- [x] レイテンシが表示される
+- [x] エラーメッセージが表示される
+- [x] ページネーションが機能する

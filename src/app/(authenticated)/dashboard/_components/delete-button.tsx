@@ -17,7 +17,7 @@ export function DeleteButton({ projectId, projectName }: { projectId: string; pr
   if (isConfirming) {
     return (
       <div className="flex items-center gap-2">
-        <span className="text-xs text-gray-500">Delete &quot;{projectName}&quot;?</span>
+        <span className="text-xs text-gray-700">Delete &quot;{projectName}&quot;?</span>
         <button
           onClick={handleDelete}
           disabled={isDeleting}

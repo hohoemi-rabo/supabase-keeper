@@ -17,7 +17,7 @@
 
 ### ワークフローファイル作成
 
-- [ ] `.github/workflows/keepalive-cron.yml` 作成
+- [x] `.github/workflows/keepalive-cron.yml` 作成
 
 ### GitHub Secrets設定
 
@@ -76,7 +76,7 @@ jobs:
 
 ## 完了条件
 
-- [ ] ワークフローファイルが作成されている
+- [x] ワークフローファイルが作成されている
 - [ ] GitHub Secretsが設定されている
 - [ ] 手動実行でテストが成功する
 - [ ] 定時実行が動作する（翌日以降に確認）

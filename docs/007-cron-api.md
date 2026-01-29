@@ -18,89 +18,66 @@ Authorization: Bearer <KEEPER_CRON_SECRET>
 ### 処理フロー
 
 1. Authorization ヘッダーを検証
-2. 有効な全プロジェクトを取得（is_enabled = true）
-3. 各プロジェクトの keep-alive URL に並列でfetch
-4. 結果を ping_logs に保存
-5. projects の状態を更新
-
-## ステータス判定ロジック
-
-| ステータス | 条件 |
-|-----------|------|
-| 🟢 ok | 直近Pingで成功、かつ連続失敗 < 2 |
-| 🟡 warn | 連続失敗 >= 2 |
-| 🔴 down | 連続失敗 >= 5、または3日以上成功なし |
+2. `createAdminClient()` で有効な全プロジェクトを取得（is_enabled = true）
+3. 各プロジェクトの keep-alive URL に `Promise.all` で並列fetch（タイムアウト10秒）
+4. 結果を `ping_logs` に保存
+5. `projects` のステータスを更新（ok/warn/down判定）
 
 ## タスク
 
 ### APIエンドポイント実装
 
-- [ ] `app/api/cron/ping/route.ts` 作成
-- [ ] Bearer Token認証実装
-- [ ] 有効プロジェクト取得ロジック
+- [x] `app/api/cron/ping/route.ts` 作成
+- [x] Bearer Token認証実装
 
 ### Ping実行ロジック
 
-- [ ] 並列fetchの実装（Promise.allSettled使用）
-- [ ] タイムアウト設定（10秒）
-- [ ] レイテンシ計測
+- [x] 並列fetchの実装（Promise.all）
+- [x] タイムアウト設定（10秒）
+- [x] レイテンシ計測
 
-### ログ保存
+### ログ保存・ステータス更新
 
-- [ ] ping_logsへの挿入処理
-- [ ] 成功/失敗の判定
-
-### ステータス更新
-
-- [ ] consecutive_failures の更新ロジック
-- [ ] status の判定・更新ロジック
-- [ ] last_ping_at, last_success_at の更新
+- [x] ping_logsへの挿入処理
+- [x] consecutive_failures の更新ロジック
+- [x] status の判定・更新ロジック（ok/warn/down）
+- [x] last_ping_at, last_success_at の更新
 
 ### エラーハンドリング
 
-- [ ] 個別プロジェクトの失敗が全体に影響しないように
-- [ ] ネットワークエラーのハンドリング
-- [ ] タイムアウトのハンドリング
+- [x] 個別プロジェクトの失敗が全体に影響しない（Promise.all内で各自try/catch）
+- [x] ネットワークエラーのハンドリング
+- [x] タイムアウトのハンドリング（AbortSignal.timeout）
 
-## 環境変数
+## ファイル構成
 
-```env
-KEEPER_CRON_SECRET=your-secret-here
+```
+src/
+  app/
+    api/
+      cron/
+        ping/
+          route.ts        # POST /api/cron/ping
 ```
 
-## レスポンス
+## レスポンス例
 
 ```json
 {
   "success": true,
-  "results": {
-    "total": 5,
-    "succeeded": 4,
-    "failed": 1
-  },
+  "results": { "total": 3, "succeeded": 2, "failed": 1 },
   "details": [
-    {
-      "projectId": "uuid",
-      "projectName": "Project A",
-      "success": true,
-      "status": 200,
-      "latencyMs": 150
-    },
-    {
-      "projectId": "uuid",
-      "projectName": "Project B",
-      "success": false,
-      "error": "Timeout"
-    }
+    { "projectId": "uuid", "projectName": "App A", "success": true, "status": 200, "latencyMs": 150 },
+    { "projectId": "uuid", "projectName": "App B", "success": false, "error": "The operation was aborted due to timeout" }
   ]
 }
 ```
 
 ## 完了条件
 
-- [ ] `/api/cron/ping` が実装されている
-- [ ] Bearer Token認証が機能する
-- [ ] 全有効プロジェクトにPingが送信される
-- [ ] ping_logsに結果が保存される
-- [ ] projectsのステータスが正しく更新される
-- [ ] 個別の失敗が全体に影響しない
+- [x] `/api/cron/ping` が実装されている
+- [x] Bearer Token認証が機能する
+- [x] 全有効プロジェクトにPingが送信される
+- [x] ping_logsに結果が保存される
+- [x] projectsのステータスが正しく更新される
+- [x] 個別の失敗が全体に影響しない

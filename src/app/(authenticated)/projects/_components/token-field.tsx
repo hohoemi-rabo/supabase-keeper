@@ -28,7 +28,7 @@ export function TokenField({
 
   return (
     <div>
-      <label htmlFor="token" className="block text-sm font-medium text-gray-700">
+      <label htmlFor="token" className="block text-sm font-medium text-gray-800">
         Token <span className="text-red-500">*</span>
       </label>
       <div className="mt-1 flex gap-2">
@@ -41,7 +41,7 @@ export function TokenField({
             minLength={8}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="block w-full rounded-md border border-gray-300 px-3 py-2 pr-10 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 font-mono text-sm"
+            className="block w-full rounded-md border border-gray-300 bg-white text-gray-900 px-3 py-2 pr-10 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 font-mono text-sm"
           />
           <button
             type="button"

@@ -24,21 +24,21 @@ export function ProjectCard({ project }: { project: Tables<'projects'> }) {
           <StatusBadge status={project.status} />
         </div>
         {!project.is_enabled && (
-          <span className="text-xs text-gray-400">disabled</span>
+          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded">disabled</span>
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-gray-600 mb-4">
+      <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-gray-700 mb-4">
         <div>
-          <span className="text-gray-400">Last ping:</span>{' '}
+          <span className="text-gray-500">Last ping:</span>{' '}
           {formatDate(project.last_ping_at)}
         </div>
         <div>
-          <span className="text-gray-400">Last success:</span>{' '}
+          <span className="text-gray-500">Last success:</span>{' '}
           {formatDate(project.last_success_at)}
         </div>
         <div>
-          <span className="text-gray-400">Failures:</span>{' '}
+          <span className="text-gray-500">Failures:</span>{' '}
           {project.consecutive_failures ?? 0}
         </div>
       </div>
@@ -46,6 +46,12 @@ export function ProjectCard({ project }: { project: Tables<'projects'> }) {
       <div className="flex items-center justify-between border-t border-gray-100 pt-3">
         <PingButton projectId={project.id} />
         <div className="flex items-center gap-3">
+          <Link
+            href={`/projects/${project.id}/logs`}
+            className="text-sm text-gray-600 hover:text-gray-900"
+          >
+            Logs
+          </Link>
           <Link
             href={`/projects/${project.id}/edit`}
             className="text-sm text-gray-600 hover:text-gray-900"
