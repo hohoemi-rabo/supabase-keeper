@@ -12,58 +12,45 @@
 
 | 項目 | 必須 | 説明 |
 |------|------|------|
-| プロジェクト名 | ○ | 表示用の名前 |
+| プロジェクト名 | ○ | 表示用の名前（max 100文字） |
 | keep-alive URL | ○ | `https://your-app.vercel.app/api/keepalive` |
-| Token | ○ | 認証用トークン（自動生成可） |
-| 有効/無効 | - | Pingを実行するかどうか |
+| Token | ○ | 認証用トークン（min 8文字、自動生成可） |
+| 有効/無効 | - | Pingを実行するかどうか（チェックボックス） |
 | メモ | - | 用途、アカウント情報など |
 
 ## タスク
 
-### 新規登録画面
-
-- [ ] `app/(authenticated)/projects/new/page.tsx` 作成
-- [ ] プロジェクト登録フォームコンポーネント作成
-- [ ] バリデーション実装
-  - プロジェクト名: 必須、1-100文字
-  - URL: 必須、有効なURL形式
-  - Token: 必須、8文字以上
-
-### 編集画面
-
-- [ ] `app/(authenticated)/projects/[id]/edit/page.tsx` 作成
-- [ ] 既存データの読み込み
-- [ ] 更新のServer Action作成
-
-### Token自動生成
-
-- [ ] Token生成ユーティリティ作成（32文字のランダム文字列）
-- [ ] 「自動生成」ボタン実装
-
-### Token表示
-
-- [ ] マスク表示（デフォルト）
-- [ ] 表示/非表示トグル
-- [ ] コピーボタン
-
-### フォームコンポーネント
-
-- [ ] 入力フィールドコンポーネント
-- [ ] トグルスイッチ（有効/無効）
-- [ ] テキストエリア（メモ）
-- [ ] 送信ボタン（ローディング状態）
-
 ### Server Actions
 
-- [ ] `createProject` アクション
-- [ ] `updateProject` アクション
-- [ ] 入力値のサニタイズ
+- [x] `getProject` - 単体取得
+- [x] `createProject` - 新規作成（バリデーション付き）
+- [x] `updateProject` - 更新（バリデーション付き）
+- [x] `validateProjectForm` - 共通バリデーション
+
+### Token機能
+
+- [x] `generate-token.ts` - crypto.getRandomValuesで32文字生成
+- [x] `token-field.tsx` - マスク表示/Show・Hide切替/Generate/Copy
+
+### フォーム
+
+- [x] `project-form.tsx` - 新規・編集共通フォーム（useActionState）
+
+### ページ
+
+- [x] `projects/new/page.tsx` - 新規登録ページ
+- [x] `projects/[id]/edit/page.tsx` - 編集ページ（既存データ読み込み）
 
 ## コンポーネント構成
 
 ```
 src/
+  lib/
+    utils/
+      generate-token.ts
   app/
+    actions/
+      projects.ts                       # getProject, createProject, updateProject 追加
     (authenticated)/
       projects/
         new/
@@ -72,20 +59,15 @@ src/
           edit/
             page.tsx
         _components/
-          project-form.tsx
-          token-field.tsx
-  lib/
-    utils/
-      generate-token.ts
-  actions/
-    projects.ts
+          project-form.tsx              # 共通フォーム
+          token-field.tsx               # Token入力（マスク/生成/コピー）
 ```
 
 ## 完了条件
 
-- [ ] 新規プロジェクトを登録できる
-- [ ] 既存プロジェクトを編集できる
-- [ ] Tokenが自動生成できる
-- [ ] Tokenがマスク表示される
-- [ ] バリデーションエラーが表示される
-- [ ] 登録/更新後にダッシュボードへリダイレクトされる
+- [x] 新規プロジェクトを登録できる
+- [x] 既存プロジェクトを編集できる
+- [x] Tokenが自動生成できる
+- [x] Tokenがマスク表示される
+- [x] バリデーションエラーが表示される
+- [x] 登録/更新後にダッシュボードへリダイレクトされる

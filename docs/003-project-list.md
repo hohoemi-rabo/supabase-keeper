@@ -13,73 +13,69 @@
 | 項目 | 説明 |
 |------|------|
 | プロジェクト名 | 任意の表示名 |
-| ステータス | 🟢 OK / 🟡 WARN / 🔴 DOWN |
+| ステータス | OK / WARN / DOWN |
 | 最終Ping時刻 | 最後にPingを実行した日時 |
 | 最終成功時刻 | 最後にPingが成功した日時 |
 | 連続失敗回数 | 連続で失敗している回数 |
 
 ## 操作
 
-- 「今すぐPing」ボタン
-- プロジェクト編集画面への遷移
-- プロジェクト削除
+- 「Ping」ボタン（即時実行、結果3秒表示）
+- Edit リンク → プロジェクト編集画面
+- Delete ボタン（インライン確認ダイアログ）
 
 ## タスク
 
-### 画面実装
+### Server Actions
 
-- [ ] `app/(authenticated)/dashboard/page.tsx` 作成
-- [ ] プロジェクト一覧取得のServer Action作成
-- [ ] プロジェクトカード/行コンポーネント作成
+- [x] `getProjects` - プロジェクト一覧取得
+- [x] `pingProject` - 手動Ping実行（ログ保存 + ステータス更新）
+- [x] `deleteProject` - プロジェクト削除
 
-### ステータス表示
+### 画面・コンポーネント
 
-- [ ] ステータスバッジコンポーネント作成
-- [ ] ステータスに応じた色分け実装
-  - ok: 緑
-  - warn: 黄
-  - down: 赤
-
-### 「今すぐPing」機能
-
-- [ ] Ping実行のServer Action作成
-- [ ] ボタンコンポーネント作成（ローディング状態含む）
-- [ ] Ping結果の即時反映
-
-### 削除機能
-
-- [ ] 削除確認ダイアログ
-- [ ] 削除のServer Action作成
-- [ ] 削除後の一覧更新
+- [x] `dashboard/page.tsx` - Server ComponentでgetProjectsを呼び出し
+- [x] `_components/project-list.tsx` - 一覧表示 + 空状態
+- [x] `_components/project-card.tsx` - プロジェクトカード
+- [x] `_components/status-badge.tsx` - ステータスバッジ（ok/warn/down色分け）
+- [x] `_components/ping-button.tsx` - Pingボタン（ローディング + 結果表示）
+- [x] `_components/delete-button.tsx` - 削除ボタン（インライン確認）
 
 ### UI/UX
 
-- [ ] 空状態の表示（プロジェクト未登録時）
-- [ ] ローディング状態の表示
-- [ ] エラー状態の表示
+- [x] 空状態の表示（「Add your first project」リンク）
+- [x] エラー状態の表示
+- [x] 「Add project」ボタン → /projects/new
 
 ## コンポーネント構成
 
 ```
-src/
-  app/
-    (authenticated)/
-      dashboard/
-        page.tsx
-        _components/
-          project-list.tsx
-          project-card.tsx
-          status-badge.tsx
-          ping-button.tsx
-          delete-button.tsx
+src/app/
   actions/
-    projects.ts
+    projects.ts                         # getProjects, pingProject, deleteProject
+  (authenticated)/
+    dashboard/
+      page.tsx                          # Server Component
+      _components/
+        project-list.tsx                # 一覧 + 空状態
+        project-card.tsx                # カード（名前、ステータス、日時、操作）
+        status-badge.tsx                # OK/WARN/DOWN バッジ
+        ping-button.tsx                 # Client: Ping実行ボタン
+        delete-button.tsx               # Client: 削除確認ボタン
 ```
+
+## ステータス判定ロジック（pingProject内）
+
+- 成功 → consecutive_failures = 0, status = 'ok'
+- 失敗 → consecutive_failures++
+  - >= 2: 'warn'
+  - >= 5: 'down'
+  - 3日以上成功なし: 'down'
 
 ## 完了条件
 
-- [ ] プロジェクト一覧が表示される
-- [ ] ステータスが色分けされて表示される
-- [ ] 「今すぐPing」でPingが実行され結果が反映される
-- [ ] プロジェクト削除が機能する
-- [ ] 編集画面へ遷移できる
+- [x] プロジェクト一覧が表示される
+- [x] ステータスが色分けされて表示される
+- [x] 「今すぐPing」でPingが実行され結果が反映される
+- [x] プロジェクト削除が機能する
+- [x] 編集画面へ遷移できる
