@@ -255,6 +255,39 @@ export const config = {
 - タスク完了時は `- [ ]` を `- [x]` に変更する
 - チケット内の「完了条件」セクションの全タスクが `[x]` になったらチケット完了
 
+## Production
+
+- **URL**: https://supabase-keeper-theta.vercel.app/
+- **Supabase Project ID**: yqjyfmkebsbeaivkhbib
+- **Supabase Region**: ap-northeast-1 (Tokyo)
+- **Cron Schedule**: 毎日 AM 9:00 JST (GitHub Actions)
+
+## App Routes
+
+### Pages (Authenticated)
+
+| Route | Description |
+|-------|-------------|
+| `/dashboard` | プロジェクト一覧（メイン画面） |
+| `/projects/new` | プロジェクト新規登録 |
+| `/projects/[id]/edit` | プロジェクト編集 |
+| `/projects/[id]/logs` | Pingログ一覧 |
+| `/manual` | プロジェクト登録マニュアル |
+
+### API Endpoints
+
+| Route | Method | Description |
+|-------|--------|-------------|
+| `/api/keepalive` | GET | 自己keep-alive用（token認証） |
+| `/api/cron/ping` | POST | 全プロジェクト一括ping（Bearer認証） |
+
+### Auth
+
+| Route | Description |
+|-------|-------------|
+| `/login` | ログインページ |
+| `/auth/callback` | OAuth callback |
+
 ## Environment Variables (Expected)
 
 For the central dashboard:

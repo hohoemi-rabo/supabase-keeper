@@ -31,7 +31,7 @@ export function ProjectForm({ project }: Props) {
           required
           maxLength={100}
           defaultValue={project?.name ?? ''}
-          className="mt-1 block w-full rounded-md border border-gray-300 bg-white text-gray-900 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-lg border border-gray-300 bg-white text-gray-900 px-3 py-2.5 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
         />
         {state.errors?.name && (
           <p className="mt-1 text-sm text-red-600">{state.errors.name}</p>
@@ -49,7 +49,7 @@ export function ProjectForm({ project }: Props) {
           required
           placeholder="https://your-app.vercel.app/api/keepalive"
           defaultValue={project?.keepalive_url ?? ''}
-          className="mt-1 block w-full rounded-md border border-gray-300 bg-white text-gray-900 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-lg border border-gray-300 bg-white text-gray-900 px-3 py-2.5 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 font-mono text-sm"
         />
         {state.errors?.keepalive_url && (
           <p className="mt-1 text-sm text-red-600">{state.errors.keepalive_url}</p>
@@ -67,7 +67,7 @@ export function ProjectForm({ project }: Props) {
           name="is_enabled"
           type="checkbox"
           defaultChecked={project?.is_enabled ?? true}
-          className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+          className="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
         />
         <label htmlFor="is_enabled" className="text-sm text-gray-800">
           Enable keep-alive ping
@@ -83,7 +83,7 @@ export function ProjectForm({ project }: Props) {
           name="notes"
           rows={3}
           defaultValue={project?.notes ?? ''}
-          className="mt-1 block w-full rounded-md border border-gray-300 bg-white text-gray-900 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-lg border border-gray-300 bg-white text-gray-900 px-3 py-2.5 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
         />
       </div>
 
@@ -95,11 +95,11 @@ export function ProjectForm({ project }: Props) {
         <button
           type="submit"
           disabled={pending}
-          className="px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-5 py-2.5 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
         >
           {pending ? 'Saving...' : isEdit ? 'Update project' : 'Create project'}
         </button>
-        <Link href="/dashboard" className="text-sm text-gray-600 hover:text-gray-900">
+        <Link href="/dashboard" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
           Cancel
         </Link>
       </div>

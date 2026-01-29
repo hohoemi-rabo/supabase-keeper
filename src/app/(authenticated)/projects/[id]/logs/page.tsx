@@ -23,18 +23,16 @@ export default async function PingLogsPage({
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <Link
-            href="/dashboard"
-            className="text-sm text-blue-600 hover:text-blue-800"
-          >
-            &larr; Dashboard
-          </Link>
-          <h2 className="text-xl font-semibold text-gray-900 mt-1">
-            Ping logs: {projectName}
-          </h2>
-        </div>
+      <div className="mb-6">
+        <Link
+          href="/dashboard"
+          className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+        >
+          &larr; Dashboard
+        </Link>
+        <h2 className="text-xl font-bold text-gray-900 mt-1">
+          Ping logs: {projectName}
+        </h2>
       </div>
 
       {error ? (
