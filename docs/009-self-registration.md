@@ -44,9 +44,9 @@ INSERT INTO projects (
 
 ### 動作確認
 
-- [ ] ダッシュボードに自分自身が表示される
-- [ ] 「今すぐPing」で自己pingが成功する
-- [ ] Cron実行時に自己pingが含まれる
+- [x] ダッシュボードに自分自身が表示される
+- [x] 「今すぐPing」で自己pingが成功する
+- [x] Cron実行時に自己pingが含まれる
 
 ## 注意事項
 
@@ -57,5 +57,5 @@ INSERT INTO projects (
 
 - [x] projectsテーブルに自分自身が登録されている
 - [x] Tokenが環境変数と一致している
-- [ ] 「今すぐPing」で成功する
-- [ ] Cron実行時にpingされる
+- [x] 「今すぐPing」で成功する
+- [x] Cron実行時にpingされる
