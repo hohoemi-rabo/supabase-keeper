@@ -13,6 +13,8 @@ function validateProjectForm(formData: FormData) {
   const name = (formData.get('name') as string)?.trim()
   const keepaliveUrl = (formData.get('keepalive_url') as string)?.trim()
   const token = (formData.get('token') as string)?.trim()
+  const supabaseUrl = (formData.get('supabase_url') as string)?.trim()
+  const supabaseAnonKey = (formData.get('supabase_anon_key') as string)?.trim()
 
   if (!name || name.length > 100) {
     errors.name = 'Project name is required (max 100 characters)'
@@ -30,6 +32,21 @@ function validateProjectForm(formData: FormData) {
 
   if (!token || token.length < 8) {
     errors.token = 'Token is required (min 8 characters)'
+  }
+
+  // Supabase URLとAnon Keyはペアで入力が必要
+  if (supabaseUrl && !supabaseAnonKey) {
+    errors.supabase_anon_key = 'Supabase Anon Key is required when Supabase URL is set'
+  }
+  if (!supabaseUrl && supabaseAnonKey) {
+    errors.supabase_url = 'Supabase URL is required when Anon Key is set'
+  }
+  if (supabaseUrl) {
+    try {
+      new URL(supabaseUrl)
+    } catch {
+      errors.supabase_url = 'Invalid URL format'
+    }
   }
 
   return { errors, isValid: Object.keys(errors).length === 0 }
@@ -80,6 +97,8 @@ export async function createProject(_prevState: FormState, formData: FormData): 
     token: (formData.get('token') as string).trim(),
     is_enabled: formData.get('is_enabled') === 'on',
     notes: (formData.get('notes') as string)?.trim() || null,
+    supabase_url: (formData.get('supabase_url') as string)?.trim() || null,
+    supabase_anon_key: (formData.get('supabase_anon_key') as string)?.trim() || null,
   })
 
   if (error) {
@@ -118,6 +137,8 @@ export async function updateProject(_prevState: FormState, formData: FormData): 
       token: (formData.get('token') as string).trim(),
       is_enabled: formData.get('is_enabled') === 'on',
       notes: (formData.get('notes') as string)?.trim() || null,
+      supabase_url: (formData.get('supabase_url') as string)?.trim() || null,
+      supabase_anon_key: (formData.get('supabase_anon_key') as string)?.trim() || null,
     })
     .eq('id', projectId)
 
@@ -192,6 +213,22 @@ export async function pingProject(projectId: string) {
     }
   } catch (e) {
     errorMessage = e instanceof Error ? e.message : 'Unknown error'
+  }
+
+  // Supabase直接Ping（設定されている場合）
+  if (project.supabase_url && project.supabase_anon_key) {
+    try {
+      await fetch(`${project.supabase_url}/rest/v1/`, {
+        method: 'HEAD',
+        headers: {
+          apikey: project.supabase_anon_key,
+          Authorization: `Bearer ${project.supabase_anon_key}`,
+        },
+        signal: AbortSignal.timeout(10000),
+      })
+    } catch {
+      // Supabase直接Pingの失敗はステータス判定に影響させない
+    }
   }
 
   const latencyMs = Date.now() - startTime

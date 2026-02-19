@@ -82,6 +82,8 @@ export type Database = {
           name: string
           notes: string | null
           status: string | null
+          supabase_anon_key: string | null
+          supabase_url: string | null
           token: string
           updated_at: string | null
           user_id: string
@@ -97,6 +99,8 @@ export type Database = {
           name: string
           notes?: string | null
           status?: string | null
+          supabase_anon_key?: string | null
+          supabase_url?: string | null
           token: string
           updated_at?: string | null
           user_id: string
@@ -112,6 +116,8 @@ export type Database = {
           name?: string
           notes?: string | null
           status?: string | null
+          supabase_anon_key?: string | null
+          supabase_url?: string | null
           token?: string
           updated_at?: string | null
           user_id?: string

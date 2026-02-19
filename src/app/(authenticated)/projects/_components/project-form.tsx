@@ -61,6 +61,49 @@ export function ProjectForm({ project }: Props) {
         error={state.errors?.token}
       />
 
+      <details className="rounded-lg border border-gray-200 bg-gray-50">
+        <summary className="cursor-pointer px-4 py-3 text-sm font-medium text-gray-800 select-none">
+          Supabase 直接Ping設定（任意）
+        </summary>
+        <div className="px-4 pb-4 space-y-4">
+          <p className="text-xs text-gray-500">
+            設定すると、Keeperが直接SupabaseのREST APIにリクエストを送り、プロジェクトの凍結を防止します。
+          </p>
+          <div>
+            <label htmlFor="supabase_url" className="block text-sm font-medium text-gray-800">
+              Supabase URL
+            </label>
+            <input
+              id="supabase_url"
+              name="supabase_url"
+              type="url"
+              placeholder="https://xxxxx.supabase.co"
+              defaultValue={project?.supabase_url ?? ''}
+              className="mt-1 block w-full rounded-lg border border-gray-300 bg-white text-gray-900 px-3 py-2.5 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 font-mono text-sm"
+            />
+            {state.errors?.supabase_url && (
+              <p className="mt-1 text-sm text-red-600">{state.errors.supabase_url}</p>
+            )}
+          </div>
+          <div>
+            <label htmlFor="supabase_anon_key" className="block text-sm font-medium text-gray-800">
+              Supabase Anon Key
+            </label>
+            <input
+              id="supabase_anon_key"
+              name="supabase_anon_key"
+              type="password"
+              placeholder="eyJhbGciOiJIUzI1NiIs..."
+              defaultValue={project?.supabase_anon_key ?? ''}
+              className="mt-1 block w-full rounded-lg border border-gray-300 bg-white text-gray-900 px-3 py-2.5 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 font-mono text-sm"
+            />
+            {state.errors?.supabase_anon_key && (
+              <p className="mt-1 text-sm text-red-600">{state.errors.supabase_anon_key}</p>
+            )}
+          </div>
+        </div>
+      </details>
+
       <div className="flex items-center gap-2">
         <input
           id="is_enabled"

@@ -133,13 +133,26 @@ export default function ManualPage() {
                       <td className="px-3 py-2 border-b border-gray-100 text-gray-600">Step 1で作成したエンドポイントのURL</td>
                     </tr>
                     <tr>
-                      <td className="px-3 py-2 font-medium whitespace-nowrap">Token</td>
-                      <td className="px-3 py-2 font-mono text-xs">aBcDeFgH12345...</td>
-                      <td className="px-3 py-2 text-gray-600">Step 1で設定した KEEPALIVE_TOKEN の値</td>
+                      <td className="px-3 py-2 border-b border-gray-100 font-medium whitespace-nowrap">Token</td>
+                      <td className="px-3 py-2 border-b border-gray-100 font-mono text-xs">aBcDeFgH12345...</td>
+                      <td className="px-3 py-2 border-b border-gray-100 text-gray-600">Step 1で設定した KEEPALIVE_TOKEN の値</td>
+                    </tr>
+                    <tr>
+                      <td className="px-3 py-2 border-b border-gray-100 font-medium whitespace-nowrap">Supabase URL</td>
+                      <td className="px-3 py-2 border-b border-gray-100 font-mono text-xs whitespace-nowrap">https://xxxxx.supabase.co</td>
+                      <td className="px-3 py-2 border-b border-gray-100 text-gray-600">（任意）対象プロジェクトのSupabase URL</td>
+                    </tr>
+                    <tr>
+                      <td className="px-3 py-2 font-medium whitespace-nowrap">Anon Key</td>
+                      <td className="px-3 py-2 font-mono text-xs">eyJhbGciOi...</td>
+                      <td className="px-3 py-2 text-gray-600">（任意）対象プロジェクトのSupabase Anon Key</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+              <p className="mt-2 text-xs text-gray-500">
+                ※ Supabase URL / Anon Key を設定すると、KeeperがSupabaseに直接リクエストを送り凍結を防止します。Supabaseダッシュボードの Settings &gt; API から確認できます。
+              </p>
             </div>
           </li>
           <li className="flex gap-3">

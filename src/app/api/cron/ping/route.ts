@@ -56,6 +56,22 @@ export async function POST(request: NextRequest) {
         errorMessage = e instanceof Error ? e.message : 'Unknown error'
       }
 
+      // Supabase直接Ping（設定されている場合）
+      if (project.supabase_url && project.supabase_anon_key) {
+        try {
+          await fetch(`${project.supabase_url}/rest/v1/`, {
+            method: 'HEAD',
+            headers: {
+              apikey: project.supabase_anon_key,
+              Authorization: `Bearer ${project.supabase_anon_key}`,
+            },
+            signal: AbortSignal.timeout(10000),
+          })
+        } catch {
+          // Supabase直接Pingの失敗はステータス判定に影響させない
+        }
+      }
+
       const latencyMs = Date.now() - startTime
       const now = new Date().toISOString()
 
