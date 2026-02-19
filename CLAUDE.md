@@ -34,21 +34,23 @@ GitHub Actions (daily cron)
         ▼
 Central Dashboard (this app)
         │ parallel fetch
-        ▼
-Project A/B/C... (/api/keepalive endpoints)
+        ├──▶ Project A/B/C... (/api/keepalive endpoints)
+        └──▶ Project A/B/C... (Supabase REST API 直接Ping ※任意設定)
 ```
 
 The central dashboard:
 1. Stores project metadata (URL, token, status) in its own Supabase instance
 2. GitHub Actions triggers the dashboard's cron API daily
 3. Dashboard fetches each project's `/api/keepalive` endpoint in parallel
-4. Results are logged and project statuses are updated
-5. Dashboard itself is also registered as a project to prevent self-pause
+4. Supabase URL/Anon Keyが登録されているプロジェクトには、Supabase REST APIへ直接リクエストも送信（凍結防止）
+5. Results are logged and project statuses are updated
+6. Dashboard itself is also registered as a project to prevent self-pause
 
 ### Key Database Tables (Central Supabase)
 
-- `projects`: Stores monitored project info (name, keepalive_url, token, status, consecutive_failures)
+- `projects`: Stores monitored project info (name, keepalive_url, token, status, consecutive_failures, supabase_url, supabase_anon_key)
 - `ping_logs`: History of ping attempts (success/failure, latency, HTTP status)
+- `heartbeat`: Self-monitoring用（keepalive時にupsert）
 
 ### Status Logic
 
