@@ -1,10 +1,10 @@
 name: Supabase Keeper Daily Ping
 
 on:
-  schedule:
-    # 毎日 AM 9:00 (JST) = UTC 0:00
-    - cron: '0 0 * * *'
-  workflow_dispatch: # 手動実行も可能
+  # 定期実行は Vercel Cron (vercel.json) に移行済み。
+  # GitHub Actions の schedule は 60 日無活動で自動無効化されるため使わない。
+  # この workflow は手動バックアップ用として残す。
+  workflow_dispatch: # 手動実行用
 
 jobs:
   ping:

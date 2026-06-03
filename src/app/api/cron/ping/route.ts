@@ -1,15 +1,38 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 
-export async function POST(request: NextRequest) {
-  // Bearer Token認証
+// Bearer Token認証
+// Vercel Cron は CRON_SECRET を、GitHub Actions / 手動実行は KEEPER_CRON_SECRET を使う（両対応）
+function isAuthorized(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization')
   const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null
+  if (!token) return false
 
-  if (!token || token !== process.env.KEEPER_CRON_SECRET) {
+  const validSecrets = [
+    process.env.CRON_SECRET,
+    process.env.KEEPER_CRON_SECRET,
+  ].filter((s): s is string => Boolean(s))
+
+  return validSecrets.includes(token)
+}
+
+// Vercel Cron は GET でエンドポイントを叩く
+export async function GET(request: NextRequest) {
+  if (!isAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
+  return runPing()
+}
 
+// GitHub Actions / 手動実行向けに POST も維持（後方互換）
+export async function POST(request: NextRequest) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+  return runPing()
+}
+
+async function runPing() {
   const supabase = createAdminClient()
 
   // 有効な全プロジェクトを取得

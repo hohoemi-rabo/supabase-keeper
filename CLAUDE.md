@@ -262,7 +262,8 @@ export const config = {
 - **URL**: https://supabase-keeper-theta.vercel.app/
 - **Supabase Project ID**: yqjyfmkebsbeaivkhbib
 - **Supabase Region**: ap-northeast-1 (Tokyo)
-- **Cron Schedule**: 毎日 AM 9:00 JST (GitHub Actions)
+- **Cron Schedule**: 毎日 AM 9:00 JST = UTC 0:00 (Vercel Cron / vercel.json)
+  - ※ GitHub Actions の schedule は 60 日無活動で自動無効化されるため、定期実行は Vercel Cron に移行済み。`.github/workflows/keepalive-cron.yml` は手動バックアップ用。
 
 ## App Routes
 
@@ -297,7 +298,8 @@ For the central dashboard:
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `KEEPALIVE_TOKEN` (for self keep-alive)
-- `KEEPER_CRON_SECRET` (for GitHub Actions auth)
+- `KEEPER_CRON_SECRET` (for GitHub Actions / 手動実行 auth)
+- `CRON_SECRET` (for Vercel Cron auth — Vercel が GET /api/cron/ping に `Authorization: Bearer` を自動付与)
 
 For monitored projects:
 - `KEEPALIVE_TOKEN` (simple auth for /api/keepalive endpoint)
